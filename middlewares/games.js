@@ -1,8 +1,7 @@
 const { readData } = require('../utils/data')
 
-async function getAllGames(req, res, next) {
+const getAllGames = async (req, res, next) => {
     const games = await readData("./data/games.json");
-
     if (!games) {
         res.status(400);
         res.send({
@@ -11,11 +10,8 @@ async function getAllGames(req, res, next) {
         });
         return;
     }
-
     req.games = games;
     next()
 }
 
-module.exports = {
-    getAllGames,
-}
+module.exports = getAllGames;

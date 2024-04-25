@@ -1,31 +1,10 @@
-const { writeData, readData } = require('../utils/data/index');
+const { writeData } = require('../utils/data/index');
 
 const sendAllGames = async (req, res) => {
-    const games = await readData("./data/games.json");
-       if (!games) {
-         res.status(400);
-         res.send({
-           status: "error",
-           message: "Нет игр в базе данных. Добавьте игру."
-         });
-         return;
-       }
-       req.games = games;
     res.send(req.games);
 };
 
 const deleteGame = async (req, res) => {
-    const games = await readData("./data/games.json");
-       if (!games) {
-         res.status(400);
-         res.send({
-           status: "error",
-           message: "Нет игр в базе данных. Добавьте игру."
-         });
-         return;
-       }
-       req.games = games;
-
     const id = Number(req.params.id);
 
     req.game = req.games.find((item) => item.id === id);
@@ -43,16 +22,6 @@ const deleteGame = async (req, res) => {
 }
 
 const addGameController = async (req, res) => {
-    const games = await readData("./data/games.json");
-       if (!games) {
-         res.status(400);
-         res.send({
-           status: "error",
-           message: "Нет игр в базе данных. Добавьте игру."
-         });
-         return;
-       }
-       req.games = games;
     // Проверяем, есть ли уже в списке игра с таким же названием
     req.isNew = !Boolean(req.games.find(item => item.title === req.body.title));
     // Если игра, которую хотим добавить, новая (её не было в списке)
